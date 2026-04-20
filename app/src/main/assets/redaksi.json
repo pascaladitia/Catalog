@@ -1,0 +1,25 @@
+{
+  "section": "Pilihan Redaksi",
+  "category": "Visual",
+  "isExclusive": true,
+  "articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Komik Indonesia Dari Masa ke Masa",
+      "description": null,
+      "label": "Tutor Visual"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Penjelajahan Angkasa: Dari Fiksi ke Fakta",
+      "description": null,
+      "label": "Tutor Visual"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Jejak Arsitektur Nusantara di Tengah Modernitas",
+      "description": null,
+      "label": "Tutor Visual"
+    }
+  ]
+}

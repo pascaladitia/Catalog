@@ -1,0 +1,23 @@
+{
+  "section": "Mungkin Anda Suka",
+  "category": "Liked",
+  "isExclusive": true,
+  "articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Panjang Jimat di Peringatan Maulid Nabi Keraton Kasepuhan Cirebon",
+      "published_time": "5 menit lalu"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Mendekatkan Warga dan Bisnis Indonesia-Turki",
+      "label": "Bebas Akses",
+      "published_time": "15 menit lalu"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Saat Rektor Universitas Saint Petersburg Terkesima",
+      "published_time": "45 menit lalu"
+    }
+  ]
+}

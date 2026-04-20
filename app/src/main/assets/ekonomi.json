@@ -1,0 +1,22 @@
+{
+  "section": "Ekonomi",
+  "isExclusive": true,
+  "articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Penurunan Harga Minyakita Terhambat Distribusi, D2, dan Regulasi Ekspor",
+      "description": "Duabelas kasus pembunuhan dan analisis data oleh Tim Jurnalisme Data Harian Kompas.",
+      "published_time": "5 menit lalu",
+      "image_description": "Pedagang menata botol minyak goreng curah di kios pasar tradisional di Jakarta."
+    },
+    {
+      "title": "Peternakan Ponsel dan Klik, Bisnis Kontroversial yang Laris Selama Musim Kampanye",
+      "published_time": "15 menit lalu"
+    },
+    {
+      "title": "Arsjad Melawan Balik",
+      "published_time": "45 menit lalu"
+    }
+  ],
+  "more_link": "Lihat Ekonomi lainnya"
+}

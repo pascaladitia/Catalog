@@ -1,0 +1,26 @@
+{
+  "articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Lilie dan Elsa, Pendakian Pamungkas Dua Sahabat di Puncak Carstensz",
+      "description": "Dua sahabat Lilie Wijayanti Poegiono dan Elsa Laksono jalani pendakian terakhir di Puncak Carstensz. Persiapan panjang telah dilakukan sebelum pendakian dilakukan.",
+      "published_time": "10 menit lalu"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Relasi Alam, Manusia, dan Tuhan dalam Serpihan Puisi",
+      "published_time": "20 menit lalu",
+      "image_description": "Ilustrasi bunga putih di atas latar hijau lembut."
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Kelindan Isu Kelembagaan",
+      "label": "Analisis"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Kelindan Isu Kelembagaan",
+      "label": "Analisis"
+    }
+  ]
+}

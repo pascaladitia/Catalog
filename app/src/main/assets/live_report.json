@@ -1,0 +1,37 @@
+{
+  "report_type": "Reportase Langsung",
+  "main_article": {
+    "image": "https://picsum.photos/600/400?random=",
+    "category": "Kampanye Pamungkas Anies, Prabowo, dan Ganjar",
+    "title": "Di Jakarta, Prabowo Tinggalkan Lokasi Kampanye Akbar di GBK",
+    "published_time": "1 menit lalu"
+  },
+  "related_articles": [
+    {
+      "title": "Megawati Bernyanyi dan Berjoget saat Kampanye Ganjar-Mahfud di Semarang",
+      "published_time": "5 menit lalu"
+    },
+    {
+      "title": "Gibran Harap Semua Pendukung di GBK Coblos No 2 di TPS",
+      "published_time": "15 menit lalu"
+    }
+  ],
+  "more_reports": {
+    "label": "Lihat laporan lainnya",
+    "count": "5+"
+  },
+  "featured_articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Presiden Minta 'Bola Panas' Kadin Jangan Dilempar ke Dirinya"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Presiden Minta 'Bola Panas' Kadin Jangan Dilempar ke Dirinya"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Presiden Minta 'Bola Panas' Kadin Jangan Dilempar ke Dirinya"
+    }
+  ]
+}

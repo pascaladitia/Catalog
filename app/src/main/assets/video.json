@@ -1,0 +1,26 @@
+{
+  "section": "Video",
+  "category": "Video",
+  "isExclusive": true,
+  "articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Fakta-fakta Pembunuhan Nia, Gadis Gigih Penjual Gorengan",
+      "published_time": "Video Berita • 1 jam lalu",
+      "image_description": "Tumpukan kardus dan suasana tempat kejadian perkara dalam kasus pembunuhan Nia"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Banjir Bekasi: Warga Bertahan di Tengah Genangan",
+      "published_time": "Video Berita • 2 jam lalu",
+      "image_description": "Warga mengendarai motor melewati jalan yang tergenang banjir di Bekasi"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Menjelang Pemilu 2025: Kesiapan dan Tantangan",
+      "published_time": "Video Berita • 3 jam lalu",
+      "image_description": "Suasana persiapan logistik dan kotak suara menjelang pemilu 2025"
+    }
+  ],
+  "more_link": "Lihat Video lainnya"
+}

@@ -1,0 +1,20 @@
+{
+  "section": "Banjir Bekasi",
+  "isExclusive": false,
+  "articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Banjir di Sejumlah Daerah, Peringatan Dini Cuaca Ekstrem Terlambat Direspons",
+      "description": "Koordinasi lebih erat antara pemerintah daerah dan masyarakat diperlukan guna meminimalkan risiko bencana hidrometeorologi.",
+      "image_description": "Sejumlah pengendara motor melintasi jalan yang tergenang banjir di Bekasi"
+    },
+    {
+      "title": "Kali Bekasi Meluap, Bekasi Lumpuh",
+      "description": null
+    },
+    {
+      "title": "Sepanjang Satu Dekade Kabupaten Bogor Selalu Dilanda Bencana Alam",
+      "description": null
+    }
+  ]
+}

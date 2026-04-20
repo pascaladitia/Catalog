@@ -1,0 +1,22 @@
+{
+  "section": "Politik & Hukum",
+  "isExclusive": true,
+  "articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Inisiatif Datangi KPK, Kaesang Mengaku 'Nebeng' Jet Milik Temannya",
+      "description": "Duabelas kasus pembunuhan dan analisis data oleh Tim Jurnalisme Data Harian Kompas.",
+      "published_time": "5 menit lalu",
+      "image_description": "Kaesang bersama rombongan tiba di Gedung KPK Jakarta untuk memberi keterangan."
+    },
+    {
+      "title": "Presiden Dorong Indonesia Jadi Barometer Perbankan Syariah Dunia",
+      "published_time": "15 menit lalu"
+    },
+    {
+      "title": "Masjid di 'Sarang' Polisi yang Bukakan Mata Amir Jamaah Islamiyah",
+      "published_time": "45 menit lalu"
+    }
+  ],
+  "more_link": "Lihat Politik & Hukum lainnya"
+}

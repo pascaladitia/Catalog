@@ -1,0 +1,30 @@
+{
+  "section": "Topik Hangat",
+  "topics": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Kunjungan Paus",
+      "image_description": "Paus Fransiskus melambaikan tangan"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Kabinet Prabowo",
+      "image_description": "Prabowo Subianto bersama pejabat lainnya"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "PON 2024",
+      "image_description": "Logo dan maskot PON 2024"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Pilkada 2024",
+      "image_description": "Ilustrasi Pilkada dengan kotak suara"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Macet Puncak",
+      "image_description": "Kemacetan kendaraan di jalur Puncak"
+    }
+  ]
+}

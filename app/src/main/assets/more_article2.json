@@ -1,0 +1,24 @@
+{
+  "articles": [
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Kandidat Menteri Prabowo, Profesional yang Sekaligus Kader Parpol",
+      "description": "Duabelas kasus pembunuhan dan analisis data oleh Tim Jurnalisme Data Harian Kompas.",
+      "media_count": "10"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Relasi Alam, Manusia, dan Tuhan dalam Serpihan Puisi"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Kelindan Isu Kelembagaan",
+      "label": "Analisis"
+    },
+    {
+      "image": "https://picsum.photos/600/400?random=",
+      "title": "Kelindan Isu Kelembagaan",
+      "label": "Analisis"
+    }
+  ]
+}
