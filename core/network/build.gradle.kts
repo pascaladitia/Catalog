@@ -26,6 +26,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:security"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlinx.serialization)

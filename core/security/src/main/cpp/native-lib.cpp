@@ -10,3 +10,13 @@ Java_com_pascal_catalog_core_security_NativeSecrets_nativeBaseUrl(
     std::string url(host, sizeof(host));
     return env->NewStringUTF(url.c_str());
 }
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_pascal_catalog_core_security_NativeSecrets_nativeSalt(
+        JNIEnv* env,
+        jobject /* this */) {
+    const char salt[] = {'c','a','t','a','l','o','g','-','n','d','k','-','s','e','c','u','r','e'};
+    std::string value(salt, sizeof(salt));
+    return env->NewStringUTF(value.c_str());
+}

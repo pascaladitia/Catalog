@@ -30,5 +30,6 @@ include(":core:database")
 include(":core:network")
 include(":core:data")
 include(":core:designsystem")
+include(":core:security")
 include(":feature:catalog")
  

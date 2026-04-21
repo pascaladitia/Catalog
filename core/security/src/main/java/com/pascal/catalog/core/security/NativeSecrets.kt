@@ -6,6 +6,8 @@ object NativeSecrets {
     }
 
     external fun nativeBaseUrl(): String
+    external fun nativeSalt(): String
 
     fun baseUrl(): String = nativeBaseUrl()
+    fun signatureSeed(): String = nativeSalt()
 }

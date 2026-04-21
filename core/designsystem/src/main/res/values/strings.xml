@@ -1,3 +1,8 @@
 <resources>
     <string name="cd_product_image">Product image</string>
+    <string name="ds_catalog_tagline">Modern commerce selection</string>
+    <string name="ds_toggle_favorite">Toggle favorite</string>
+    <string name="ds_add_to_cart">Add to cart</string>
+    <string name="ds_decrease_quantity">Decrease quantity</string>
+    <string name="ds_increase_quantity">Increase quantity</string>
 </resources>

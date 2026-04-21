@@ -13,6 +13,7 @@ data class ProductEntity(
     val imageUrl: String,
     val price: Double,
     val isFavorite: Boolean,
+    val cartQuantity: Int,
     @Embedded(prefix = "rating_")
     val rating: RatingEmbedded,
 )

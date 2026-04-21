@@ -9,12 +9,14 @@ private val LightColors = lightColorScheme(
     primary = OceanDark,
     secondary = Ocean,
     tertiary = Coral,
-    background = White,
-    surface = SurfaceLight,
+    background = SurfaceLight,
+    surface = White,
+    surfaceVariant = Sand,
     onPrimary = White,
     onSecondary = White,
     onBackground = Ink,
     onSurface = Ink,
+    outlineVariant = Cloud,
 )
 
 private val DarkColors = darkColorScheme(
@@ -27,6 +29,7 @@ private val DarkColors = darkColorScheme(
     onSecondary = Ink,
     onBackground = White,
     onSurface = White,
+    outlineVariant = androidx.compose.ui.graphics.Color(0xFF344054),
 )
 
 private object ColorTokens {

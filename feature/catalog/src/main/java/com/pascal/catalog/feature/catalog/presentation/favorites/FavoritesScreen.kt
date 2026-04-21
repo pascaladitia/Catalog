@@ -18,8 +18,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pascal.catalog.core.designsystem.component.EmptyState
-import com.pascal.catalog.core.designsystem.component.ProductCard
+import com.pascal.catalog.core.designsystem.component.ProductRowCard
 import com.pascal.catalog.feature.catalog.R
+import com.pascal.catalog.feature.catalog.presentation.favorites.state.LocalFavoritesEvent
+import com.pascal.catalog.feature.catalog.presentation.favorites.state.LocalFavoritesUiState
 
 @Composable
 fun FavoritesRoute(
@@ -27,19 +29,15 @@ fun FavoritesRoute(
     viewModel: FavoritesViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    FavoritesScreen(
-        uiState = uiState,
-        onOpenDetail = onOpenDetail,
-        onToggleFavorite = viewModel::toggleFavorite,
-    )
+    FavoritesScreen(uiState, viewModel::onEvent, onOpenDetail)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun FavoritesScreen(
-    uiState: FavoritesUiState,
+    uiState: LocalFavoritesUiState,
+    onEvent: (LocalFavoritesEvent) -> Unit,
     onOpenDetail: (Int) -> Unit,
-    onToggleFavorite: (Int) -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -63,14 +61,12 @@ private fun FavoritesScreen(
                     )
                 }
             } else {
-                items(
-                    items = uiState.products,
-                    key = { it.id },
-                ) { product ->
-                    ProductCard(
+                items(uiState.products, key = { it.id }) { product ->
+                    ProductRowCard(
                         product = product,
                         onClick = { onOpenDetail(product.id) },
-                        onFavoriteClick = { onToggleFavorite(product.id) },
+                        onFavoriteClick = { onEvent(LocalFavoritesEvent.ToggleFavorite(product.id)) },
+                        onAddToCartClick = { onEvent(LocalFavoritesEvent.AddToCart(product.id)) },
                     )
                 }
             }
