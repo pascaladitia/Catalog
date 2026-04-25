@@ -5,4 +5,13 @@
     <string name="ds_add_to_cart">Add to cart</string>
     <string name="ds_decrease_quantity">Decrease quantity</string>
     <string name="ds_increase_quantity">Increase quantity</string>
+
+    <string name="label_app_name">Catalog</string>
+    <string name="label_title_login">Enter your Email and Password to Login</string>
+    <string name="label_login">Login</string>
+    <string name="label_register">Register</string>
+    <string name="label_email_username">Email or Username</string>
+    <string name="hint_email_username">Enter email or username</string>
+    <string name="label_password">Password</string>
+    <string name="hint_password">Enter password</string>
 </resources>
