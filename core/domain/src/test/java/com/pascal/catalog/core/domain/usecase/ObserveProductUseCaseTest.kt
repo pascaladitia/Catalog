@@ -7,20 +7,20 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Test
 
-class SearchProductsUseCaseTest {
+class ObserveProductUseCaseTest {
 
     @Test
-    fun `returns filtered products from repository`() = runTest {
+    fun `get product from repository`() = runTest {
         val products = listOf(
             sampleProduct(id = 1, title = "Backpack"),
-            sampleProduct(id = 2, title = "Shirt"),
+            sampleProduct(id = 2, title = "Shirt")
         )
-        val repository = FakeRepository(products)
 
-        val result = SearchProductsUseCase(repository)("pack")
+        val repository = FakeRepository(products)
+        val result = ObserveProductsUseCase(repository)()
         val items = result.first()
 
-        assertThat(items).hasSize(1)
-        assertThat(items.first().title).isEqualTo("Backpack")
+        assertThat(items).hasSize(2)
+        assertThat(items.last().title).isEqualTo("Shirt")
     }
 }
