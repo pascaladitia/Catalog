@@ -38,6 +38,11 @@ Android Product Catalog app built with `Clean Architecture`, `MVVM`, `Coroutines
 - `:core:designsystem` - shared Compose UI components and theme
 - `:core:security` - native security layer
 - `:feature:catalog` - catalog feature UI, state, event, mapper, viewmodel
+- `:feature:auth` - auth feature login
+
+## Sample Account Login
+username: johnd
+password: m38rmF$
 
 ## Run
 
