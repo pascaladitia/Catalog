@@ -10,6 +10,7 @@ import com.pascal.catalog.core.database.entity.RatingEmbedded
 import com.pascal.catalog.core.database.entity.UserEntity
 import com.pascal.catalog.core.domain.model.CatalogUser
 import com.pascal.catalog.core.domain.model.CategorySummary
+import com.pascal.catalog.core.domain.model.Login
 import com.pascal.catalog.core.domain.model.Order
 import com.pascal.catalog.core.domain.model.OrderLine
 import com.pascal.catalog.core.domain.model.Product
@@ -17,6 +18,11 @@ import com.pascal.catalog.core.domain.model.Rating
 import com.pascal.catalog.core.network.model.CartDto
 import com.pascal.catalog.core.network.model.ProductDto
 import com.pascal.catalog.core.network.model.UserDto
+import com.pascal.catalog.core.network.model.login.LoginDto
+
+fun LoginDto.toDomain(): Login = Login(
+    token = token.orEmpty(),
+)
 
 fun ProductEntity.toDomain(): Product = Product(
     id = id,

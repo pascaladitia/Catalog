@@ -41,6 +41,8 @@ import com.pascal.catalog.core.designsystem.R
 import com.pascal.catalog.core.designsystem.component.ButtonComponent
 import com.pascal.catalog.core.designsystem.component.FormEmailComponent
 import com.pascal.catalog.core.designsystem.component.FormPasswordComponent
+import com.pascal.catalog.core.designsystem.component.LoadingScreen
+import com.pascal.catalog.core.designsystem.component.ShowDialog
 import com.pascal.catalog.core.designsystem.theme.CatalogTheme
 import com.pascal.catalog.feature.auth.navigation.AuthDestination
 import com.pascal.catalog.feature.auth.presentation.login.state.LocalLoginEvent
@@ -57,6 +59,20 @@ fun LoginRoute(
 
     LaunchedEffect(uiState.isLoginSuccess) {
         if (uiState.isLoginSuccess) onLoginSuccess()
+    }
+
+    if (uiState.isLoading) {
+        LoadingScreen()
+    }
+
+    if (uiState.error.first) {
+        ShowDialog(
+            message = uiState.error.second,
+            textButton = stringResource(R.string.label_close),
+            color = MaterialTheme.colorScheme.primary
+        ) {
+            viewModel.hideDialog()
+        }
     }
 
     LoginScreen(

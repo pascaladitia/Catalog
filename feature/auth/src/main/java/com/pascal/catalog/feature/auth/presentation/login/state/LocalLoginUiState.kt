@@ -1,7 +1,7 @@
 package com.pascal.catalog.feature.auth.presentation.login.state
 
 data class LocalLoginUiState(
-    val isLoading: Boolean = true,
+    val isLoading: Boolean = false,
     val error: Pair<Boolean, String> = false to "",
 
     val email: Pair<Boolean, String> = false to "",

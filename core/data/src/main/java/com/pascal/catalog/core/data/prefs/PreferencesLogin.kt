@@ -48,10 +48,10 @@ object PreferencesLogin {
     fun setLoginResponse(context: Context, responseLogin: UserDto?) =
         putObject(context, RESPONSE_LOGIN, responseLogin)
 
-    fun saveLoginData(context: Context, isSaveLogin: Boolean) =
+    fun saveIsLogin(context: Context, isSaveLogin: Boolean) =
         edit(context) { putBoolean(IS_SAVE_LOGIN, isSaveLogin) }
 
-    fun getIsSaveLogin(context: Context): Boolean =
+    fun getIsLogin(context: Context): Boolean =
         prefs(context).getBoolean(IS_SAVE_LOGIN, false)
 
     fun getLoginResponse(context: Context): UserDto? =

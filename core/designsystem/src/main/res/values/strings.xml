@@ -6,6 +6,7 @@
     <string name="ds_decrease_quantity">Decrease quantity</string>
     <string name="ds_increase_quantity">Increase quantity</string>
 
+    <string name="label_close">Close</string>
     <string name="label_app_name">Catalog</string>
     <string name="label_title_login">Enter your Email and Password to Login</string>
     <string name="label_login">Login</string>

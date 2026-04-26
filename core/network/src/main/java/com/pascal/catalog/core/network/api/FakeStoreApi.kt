@@ -3,10 +3,17 @@ package com.pascal.catalog.core.network.api
 import com.pascal.catalog.core.network.model.CartDto
 import com.pascal.catalog.core.network.model.ProductDto
 import com.pascal.catalog.core.network.model.UserDto
+import com.pascal.catalog.core.network.model.login.LoginBody
+import com.pascal.catalog.core.network.model.login.LoginDto
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface FakeStoreApi {
+    @POST("auth/login")
+    suspend fun login(@Body body: LoginBody): LoginDto
+
     @GET("products")
     suspend fun getProducts(): List<ProductDto>
 
