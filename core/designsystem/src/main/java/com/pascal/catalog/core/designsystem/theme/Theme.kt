@@ -6,9 +6,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
 private val LightColors = lightColorScheme(
-    primary = OceanDark,
+    primary = Coral,
     secondary = Ocean,
-    tertiary = Coral,
+    tertiary = OceanDark,
     background = SurfaceLight,
     surface = White,
     surfaceVariant = Sand,
@@ -20,8 +20,8 @@ private val LightColors = lightColorScheme(
 )
 
 private val DarkColors = darkColorScheme(
-    primary = Ocean,
-    secondary = Coral,
+    primary = Coral,
+    secondary = Ocean,
     tertiary = White,
     background = Ink,
     surface = ColorTokens.DarkSurface,

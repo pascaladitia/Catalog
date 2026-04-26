@@ -32,6 +32,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.hilt.android)
+    implementation(libs.kotlinx.serialization.json)
     kapt(libs.hilt.compiler)
 
     testImplementation(libs.junit)

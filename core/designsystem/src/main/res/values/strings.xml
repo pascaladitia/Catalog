@@ -14,4 +14,5 @@
     <string name="hint_email_username">Enter email or username</string>
     <string name="label_password">Password</string>
     <string name="hint_password">Enter password</string>
+    <string name="message_dont_have_account">Don\'t you have an account yet?</string>
 </resources>

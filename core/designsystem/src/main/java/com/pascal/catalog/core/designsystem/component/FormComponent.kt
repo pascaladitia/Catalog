@@ -457,7 +457,7 @@ fun TextError(text: String) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "$text tidak boleh kosong.",
+            text = "$text must be filled.",
             style = MaterialTheme.typography.labelLarge.copy(
                 color = Red
             ),
@@ -471,7 +471,7 @@ fun TextError2(text: AnnotatedString) {
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "$text tidak boleh kosong.",
+            text = "$text must be filled.",
             style = MaterialTheme.typography.labelLarge.copy(
                 color = Red
             ),

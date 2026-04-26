@@ -44,7 +44,7 @@ class LoginViewModel @Inject constructor(
                 }
 
                 if (_uiState.value.password.second.isBlank()) {
-                    _uiState.update { it.copy(email = true to _uiState.value.password.second) }
+                    _uiState.update { it.copy(password = true to _uiState.value.password.second) }
                     return
                 }
 
