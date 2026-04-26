@@ -59,9 +59,14 @@ import java.util.Locale
 @Composable
 fun AccountRoute(
     viewModel: AccountViewModel = hiltViewModel(),
+    onLogout: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    AccountScreen(uiState, viewModel::onEvent)
+    AccountScreen(
+        uiState = uiState,
+        onEvent = viewModel::onEvent,
+        onLogout = onLogout
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,6 +74,7 @@ fun AccountRoute(
 private fun AccountScreen(
     uiState: LocalAccountUiState,
     onEvent: (LocalAccountEvent) -> Unit,
+    onLogout: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -90,7 +96,7 @@ private fun AccountScreen(
                         description = stringResource(R.string.account_empty_description),
                     )
                 } else {
-                    ProfileHeroCard(user = user, onRefresh = { onEvent(LocalAccountEvent.Refresh) })
+                    ProfileHeroCard(user = user, onLogout = onLogout)
                 }
             }
             item {
@@ -118,7 +124,7 @@ private fun AccountScreen(
 @Composable
 private fun ProfileHeroCard(
     user: CatalogUser,
-    onRefresh: () -> Unit,
+    onLogout: () -> Unit,
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -199,10 +205,10 @@ private fun ProfileHeroCard(
             }
 
             Button(
-                onClick = onRefresh,
+                onClick = onLogout,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(stringResource(R.string.action_refresh))
+                Text(stringResource(R.string.action_logout))
             }
         }
     }

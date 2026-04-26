@@ -106,6 +106,7 @@ fun CatalogScaffold(
 
 fun NavGraphBuilder.catalogNavGraph(
     navController: NavHostController,
+    onLogout: () -> Unit,
 ) {
     composable(CatalogDestination.Home.route) {
         HomeRoute(onOpenDetail = { navController.navigate(CatalogDestination.Detail.createRoute(it)) })
@@ -117,7 +118,9 @@ fun NavGraphBuilder.catalogNavGraph(
         CartRoute()
     }
     composable(CatalogDestination.Account.route) {
-        AccountRoute()
+        AccountRoute(
+            onLogout = onLogout,
+        )
     }
     composable(
         route = CatalogDestination.Detail.route,

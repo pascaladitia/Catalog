@@ -61,6 +61,7 @@
     <string name="detail_rating">Rating %1$.1f from %2$d reviews</string>
     <string name="related_products_title">Related Picks</string>
     <string name="action_refresh">Refresh data</string>
+    <string name="action_logout">Logout</string>
     <string name="action_back">Back</string>
     <string name="action_add_favorite">Save to wishlist</string>
     <string name="action_remove_favorite">Remove from wishlist</string>

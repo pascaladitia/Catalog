@@ -8,12 +8,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -24,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -105,6 +110,11 @@ private fun HomeScreen(
                             Icon(Icons.Rounded.Search, contentDescription = stringResource(R.string.search_icon))
                         },
                         singleLine = true,
+                        shape = RoundedCornerShape(16.dp),
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.White,
+                            unfocusedContainerColor = Color.White
+                        ),
                     )
                 }
                 item {
@@ -119,6 +129,7 @@ private fun HomeScreen(
                             FilterChip(
                                 selected = uiState.selectedCategory == null,
                                 onClick = { onEvent(LocalHomeEvent.CategorySelected(null)) },
+                                colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Color.White),
                                 label = { Text(stringResource(R.string.category_all)) },
                             )
                         }
@@ -126,6 +137,7 @@ private fun HomeScreen(
                             FilterChip(
                                 selected = uiState.selectedCategory == category.name,
                                 onClick = { onEvent(LocalHomeEvent.CategorySelected(category.name)) },
+                                colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Color.White),
                                 label = { Text(stringResource(R.string.category_with_count, category.name, category.itemCount)) },
                             )
                         }
