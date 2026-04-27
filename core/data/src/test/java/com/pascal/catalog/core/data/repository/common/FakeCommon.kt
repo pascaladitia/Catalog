@@ -18,6 +18,8 @@ import com.pascal.catalog.core.network.model.CartProductDto
 import com.pascal.catalog.core.network.model.NameDto
 import com.pascal.catalog.core.network.model.ProductDto
 import com.pascal.catalog.core.network.model.UserDto
+import com.pascal.catalog.core.network.model.login.LoginBody
+import com.pascal.catalog.core.network.model.login.LoginDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.emptyFlow
@@ -26,7 +28,16 @@ import kotlinx.coroutines.flow.map
 class FakeApi(
     private val products: List<ProductDto>,
     ) : FakeStoreApi {
-        override suspend fun getProducts(): List<ProductDto> = products
+
+    override suspend fun login(body: LoginBody): LoginDto {
+        return if (body.username == "user" && body.password == "password") {
+            LoginDto(token = "fake_token")
+        } else {
+            throw Exception("Invalid credentials")
+        }
+    }
+
+    override suspend fun getProducts(): List<ProductDto> = products
         override suspend fun getProduct(productId: Int): ProductDto = products.first()
         override suspend fun getCategories(): List<String> = listOf("bags")
         override suspend fun getProductsByCategory(category: String): List<ProductDto> = products
