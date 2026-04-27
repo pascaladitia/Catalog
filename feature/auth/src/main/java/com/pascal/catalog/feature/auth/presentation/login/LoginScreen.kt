@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.pascal.catalog.core.data.prefs.PreferencesLogin
 import com.pascal.catalog.core.designsystem.R
 import com.pascal.catalog.core.designsystem.component.ButtonComponent
 import com.pascal.catalog.core.designsystem.component.FormEmailComponent
@@ -55,10 +57,14 @@ fun LoginRoute(
     onLoginSuccess: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(uiState.isLoginSuccess) {
-        if (uiState.isLoginSuccess) onLoginSuccess()
+        if (uiState.isLoginSuccess) {
+            PreferencesLogin.saveIsLogin(context, true)
+            onLoginSuccess()
+        }
     }
 
     if (uiState.isLoading) {
