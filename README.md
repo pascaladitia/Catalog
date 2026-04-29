@@ -23,7 +23,7 @@ Android Product Catalog app built with `Clean Architecture`, `MVVM`, `Coroutines
 - MVVM Pattern
 - Kotlin Coroutines and Flow
 - Room Database
-- Retrofit / OkHttp
+- Ktor Networking
 - Dagger Hilt
 - NDK (C++)
 
