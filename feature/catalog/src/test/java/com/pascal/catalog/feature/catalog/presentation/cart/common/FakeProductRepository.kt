@@ -3,7 +3,6 @@ package com.pascal.catalog.feature.catalog.presentation.cart.common
 import com.pascal.catalog.core.domain.model.CatalogUser
 import com.pascal.catalog.core.domain.model.CategorySummary
 import com.pascal.catalog.core.domain.model.DataResult
-import com.pascal.catalog.core.domain.model.Login
 import com.pascal.catalog.core.domain.model.Order
 import com.pascal.catalog.core.domain.model.Product
 import com.pascal.catalog.core.domain.model.Rating
@@ -18,9 +17,6 @@ class FakeProductRepository(
 ) : ProductRepository {
     private val products = MutableStateFlow(initialProducts)
 
-    override fun login(username: String, password: String): Flow<Login> {
-        TODO("Not yet implemented")
-    }
     override fun observeProducts(): Flow<List<Product>> = products
     override fun searchProducts(query: String): Flow<List<Product>> = products
     override fun observeCategories(): Flow<List<CategorySummary>> = flowOf(emptyList())

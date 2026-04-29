@@ -6,7 +6,6 @@ import com.pascal.catalog.core.domain.usecase.ObserveCurrentUserUseCase
 import com.pascal.catalog.core.domain.usecase.ObserveOrdersUseCase
 import com.pascal.catalog.core.domain.usecase.RefreshProductsUseCase
 import com.pascal.catalog.feature.catalog.presentation.account.mapper.AccountUiStateMapper
-import com.pascal.catalog.feature.catalog.presentation.account.state.LocalAccountEvent
 import com.pascal.catalog.feature.catalog.presentation.account.state.LocalAccountUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -33,9 +32,9 @@ class AccountViewModel @Inject constructor(
         initialValue = LocalAccountUiState(),
     )
 
-    fun onEvent(event: LocalAccountEvent) {
-        when (event) {
-            LocalAccountEvent.Refresh -> viewModelScope.launch { refreshProductsUseCase() }
+    fun onRefresh() {
+        viewModelScope.launch {
+            refreshProductsUseCase()
         }
     }
 }

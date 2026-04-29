@@ -15,12 +15,10 @@ import com.pascal.catalog.core.database.entity.ProductEntity
 import com.pascal.catalog.core.domain.model.CatalogUser
 import com.pascal.catalog.core.domain.model.CategorySummary
 import com.pascal.catalog.core.domain.model.DataResult
-import com.pascal.catalog.core.domain.model.Login
 import com.pascal.catalog.core.domain.model.Order
 import com.pascal.catalog.core.domain.model.Product
 import com.pascal.catalog.core.domain.repository.ProductRepository
 import com.pascal.catalog.core.network.api.FakeStoreApi
-import com.pascal.catalog.core.network.model.login.LoginBody
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -41,10 +39,6 @@ class ProductRepositoryImpl @Inject constructor(
 ) : ProductRepository {
 
     private val currentUserId = 1
-
-    override fun login(username: String, password: String): Flow<Login> = flow {
-        emit(api.login(LoginBody(username, password)).toDomain())
-    }
 
     override fun observeProducts(): Flow<List<Product>> =
         productDao.observeProducts().map { entities -> entities.map { it.toDomain() } }

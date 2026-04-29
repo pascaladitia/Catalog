@@ -10,7 +10,6 @@ import com.pascal.catalog.core.domain.usecase.RefreshProductsUseCase
 import com.pascal.catalog.core.domain.usecase.SearchProductsUseCase
 import com.pascal.catalog.core.domain.usecase.ToggleFavoriteUseCase
 import com.pascal.catalog.feature.catalog.presentation.home.mapper.HomeUiStateMapper
-import com.pascal.catalog.feature.catalog.presentation.home.state.LocalHomeEvent
 import com.pascal.catalog.feature.catalog.presentation.cart.common.MainDispatcherRule
 import com.pascal.catalog.feature.catalog.presentation.cart.common.FakeProductRepository
 import com.pascal.catalog.feature.catalog.presentation.cart.common.product
@@ -63,7 +62,7 @@ class HomeViewModelTest {
         backgroundScope.launch { viewModel.uiState.collect {} }
         advanceUntilIdle()
 
-        viewModel.onEvent(LocalHomeEvent.SearchChanged("Item 1"))
+        viewModel.onSearchChanged("Item 1")
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.query).isEqualTo("Item 1")
@@ -80,7 +79,7 @@ class HomeViewModelTest {
         backgroundScope.launch { viewModel.uiState.collect {} }
         advanceUntilIdle()
 
-        viewModel.onEvent(LocalHomeEvent.CategorySelected("electronics"))
+        viewModel.onCategorySelected("electronics")
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.selectedCategory).isEqualTo("electronics")

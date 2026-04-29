@@ -1,7 +1,13 @@
 package com.pascal.catalog.feature.catalog.presentation.cart.state
 
-sealed interface LocalCartEvent {
-    data class IncreaseQuantity(val productId: Int) : LocalCartEvent
-    data class DecreaseQuantity(val productId: Int) : LocalCartEvent
-    data object ClearCart : LocalCartEvent
-}
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.compositionLocalOf
+
+val LocalCartEvent = compositionLocalOf { CartEvent() }
+
+@Stable
+data class CartEvent(
+    val onIncreaseQuantity: (Int) -> Unit = {},
+    val onDecreaseQuantity: (Int) -> Unit = {},
+    val onClearCart: () -> Unit = {},
+)

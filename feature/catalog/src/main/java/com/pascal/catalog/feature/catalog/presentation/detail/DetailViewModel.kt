@@ -9,7 +9,6 @@ import com.pascal.catalog.core.domain.usecase.ObserveProductsUseCase
 import com.pascal.catalog.core.domain.usecase.RefreshProductUseCase
 import com.pascal.catalog.core.domain.usecase.ToggleFavoriteUseCase
 import com.pascal.catalog.feature.catalog.presentation.detail.mapper.DetailUiStateMapper
-import com.pascal.catalog.feature.catalog.presentation.detail.state.LocalDetailEvent
 import com.pascal.catalog.feature.catalog.presentation.detail.state.LocalDetailUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -42,14 +41,24 @@ class DetailViewModel @Inject constructor(
     )
 
     init {
-        onEvent(LocalDetailEvent.Refresh)
+        onRefresh()
     }
 
-    fun onEvent(event: LocalDetailEvent) {
-        when (event) {
-            LocalDetailEvent.Refresh -> viewModelScope.launch { refreshProductUseCase(productId) }
-            LocalDetailEvent.ToggleFavorite -> viewModelScope.launch { toggleFavoriteUseCase(productId) }
-            LocalDetailEvent.AddToCart -> viewModelScope.launch { addToCartUseCase(productId) }
+    fun onRefresh() {
+        viewModelScope.launch {
+            refreshProductUseCase(productId)
+        }
+    }
+
+    fun onToggleFavorite() {
+        viewModelScope.launch {
+            toggleFavoriteUseCase(productId)
+        }
+    }
+
+    fun onAddToCart() {
+        viewModelScope.launch {
+            addToCartUseCase(productId)
         }
     }
 }

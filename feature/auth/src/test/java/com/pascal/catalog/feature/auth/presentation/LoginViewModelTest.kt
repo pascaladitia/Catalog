@@ -2,10 +2,9 @@ package com.pascal.catalog.feature.auth.presentation
 
 import com.google.common.truth.Truth
 import com.pascal.catalog.core.domain.usecase.LoginUseCase
-import com.pascal.catalog.feature.auth.presentation.common.FakeProductRepository
+import com.pascal.catalog.feature.auth.presentation.common.FakeAuthRepository
 import com.pascal.catalog.feature.auth.presentation.common.MainDispatcherRule
 import com.pascal.catalog.feature.auth.presentation.login.LoginViewModel
-import com.pascal.catalog.feature.auth.presentation.login.state.LocalLoginEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -21,20 +20,19 @@ class LoginViewModelTest {
 
     @Test
     fun `login success updates state`() = runTest {
-        val repository = FakeProductRepository(emptyList())
+        val repository = FakeAuthRepository()
 
         val viewModel = LoginViewModel(
-            loginUseCase = LoginUseCase(repository)
+            loginUseCase = LoginUseCase(repository),
         )
 
         val job = backgroundScope.launch {
             viewModel.uiState.collect {}
         }
 
-        viewModel.onEvent(LocalLoginEvent.OnEmailChange("user"))
-        viewModel.onEvent(LocalLoginEvent.OnPasswordChange("user"))
-
-        viewModel.onEvent(LocalLoginEvent.OnSubmit)
+        viewModel.onEmailChange("user")
+        viewModel.onPasswordChange("user")
+        viewModel.onSubmit()
 
         advanceUntilIdle()
 

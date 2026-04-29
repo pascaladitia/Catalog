@@ -1,6 +1,8 @@
 package com.pascal.catalog.core.data.di
 
+import com.pascal.catalog.core.data.repository.AuthRepositoryImpl
 import com.pascal.catalog.core.data.repository.ProductRepositoryImpl
+import com.pascal.catalog.core.domain.repository.AuthRepository
 import com.pascal.catalog.core.domain.repository.ProductRepository
 import dagger.Binds
 import dagger.Module
@@ -17,4 +19,10 @@ abstract class RepositoryModule {
     abstract fun bindProductRepository(
         repositoryImpl: ProductRepositoryImpl,
     ): ProductRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAuthRepository(
+        repositoryImpl: AuthRepositoryImpl,
+    ): AuthRepository
 }

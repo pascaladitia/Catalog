@@ -2,69 +2,65 @@ package com.pascal.catalog.feature.auth.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.pascal.catalog.core.data.prefs.PreferencesLogin
 import com.pascal.catalog.core.domain.usecase.LoginUseCase
-import com.pascal.catalog.feature.auth.presentation.login.state.LocalLoginEvent
 import com.pascal.catalog.feature.auth.presentation.login.state.LocalLoginUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
-): ViewModel() {
+    private val loginUseCase: LoginUseCase,
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LocalLoginUiState())
-    val uiState = _uiState.asStateFlow()
+    val uiState: StateFlow<LocalLoginUiState> = _uiState.asStateFlow()
 
-    fun onEvent(event: LocalLoginEvent) {
-        when (event) {
-            is LocalLoginEvent.OnEmailChange -> {
-                _uiState.update { it.copy(email = false to event.value) }
-            }
-
-            is LocalLoginEvent.OnPasswordChange -> {
-                _uiState.update { it.copy(password = false to event.value) }
-            }
-
-            is LocalLoginEvent.OnPasswordVisibility -> {
-                _uiState.update { it.copy(passwordVisibility = !it.passwordVisibility) }
-            }
-
-            is LocalLoginEvent.OnSubmit -> {
-                if (_uiState.value.email.second.isBlank()) {
-                    _uiState.update { it.copy(email = true to _uiState.value.email.second) }
-                    return
-                }
-
-                if (_uiState.value.password.second.isBlank()) {
-                    _uiState.update { it.copy(password = true to _uiState.value.password.second) }
-                    return
-                }
-
-                loadLogin()
-            }
-        }
+    fun onEmailChange(value: String) {
+        _uiState.update { it.copy(email = value to false) }
     }
 
-    fun loadLogin() {
-        viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+    fun onPasswordChange(value: String) {
+        _uiState.update { it.copy(password = value to false) }
+    }
 
-            loginUseCase.invoke(_uiState.value.email.second, _uiState.value.password.second)
+    fun onTogglePasswordVisibility() {
+        _uiState.update { it.copy(isPasswordVisible = !it.isPasswordVisible) }
+    }
+
+    fun onSubmit() {
+        val state = _uiState.value
+        val isEmailBlank = state.email.first.isBlank()
+        val isPasswordBlank = state.password.first.isBlank()
+
+        if (isEmailBlank || isPasswordBlank) {
+            val message = when {
+                isEmailBlank -> "Email tidak boleh kosong"
+                isPasswordBlank -> "Password tidak boleh kosong"
+                else -> ""
+            }
+            _uiState.update { it.copy(error = true to message) }
+            return
+        }
+
+        loadLogin()
+    }
+
+    private fun loadLogin() {
+        _uiState.update { it.copy(isLoading = true) }
+
+        viewModelScope.launch {
+            loginUseCase(_uiState.value.email.first, _uiState.value.password.first)
                 .catch { e ->
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            error = true to e.message.orEmpty()
+                            error = true to e.message.orEmpty(),
                         )
                     }
                 }
@@ -72,7 +68,7 @@ class LoginViewModel @Inject constructor(
                     _uiState.update {
                         it.copy(
                             isLoading = false,
-                            isLoginSuccess = true
+                            isLoginSuccess = true,
                         )
                     }
                 }
@@ -85,6 +81,6 @@ class LoginViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        _uiState.update { LocalLoginUiState() }
+        _uiState.value = LocalLoginUiState()
     }
 }

@@ -8,7 +8,6 @@ import com.pascal.catalog.feature.catalog.presentation.cart.common.FakeProductRe
 import com.pascal.catalog.feature.catalog.presentation.cart.common.MainDispatcherRule
 import com.pascal.catalog.feature.catalog.presentation.cart.common.product
 import com.pascal.catalog.feature.catalog.presentation.cart.mapper.CartUiStateMapper
-import com.pascal.catalog.feature.catalog.presentation.cart.state.LocalCartEvent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -38,7 +37,7 @@ class CartViewModelTest {
         backgroundScope.launch { viewModel.uiState.collect {} }
         advanceUntilIdle()
 
-        viewModel.onEvent(LocalCartEvent.DecreaseQuantity(productId = 1))
+        viewModel.onDecreaseQuantity(productId = 1)
         advanceUntilIdle()
 
         assertThat(viewModel.uiState.value.itemCount).isEqualTo(1)

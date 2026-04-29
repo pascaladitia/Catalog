@@ -3,13 +3,11 @@ package com.pascal.catalog.core.domain.repository
 import com.pascal.catalog.core.domain.model.CatalogUser
 import com.pascal.catalog.core.domain.model.CategorySummary
 import com.pascal.catalog.core.domain.model.DataResult
-import com.pascal.catalog.core.domain.model.Login
 import com.pascal.catalog.core.domain.model.Order
 import com.pascal.catalog.core.domain.model.Product
 import kotlinx.coroutines.flow.Flow
 
 interface ProductRepository {
-    fun login(username: String, password: String) : Flow<Login>
     fun observeProducts(): Flow<List<Product>>
     fun searchProducts(query: String): Flow<List<Product>>
     fun observeCategories(): Flow<List<CategorySummary>>

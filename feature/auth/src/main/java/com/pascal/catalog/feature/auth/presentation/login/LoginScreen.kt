@@ -22,6 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -37,7 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.pascal.catalog.core.data.prefs.PreferencesLogin
 import com.pascal.catalog.core.designsystem.R
 import com.pascal.catalog.core.designsystem.component.ButtonComponent
@@ -46,16 +46,15 @@ import com.pascal.catalog.core.designsystem.component.FormPasswordComponent
 import com.pascal.catalog.core.designsystem.component.LoadingScreen
 import com.pascal.catalog.core.designsystem.component.ShowDialog
 import com.pascal.catalog.core.designsystem.theme.CatalogTheme
-import com.pascal.catalog.feature.auth.navigation.AuthDestination
 import com.pascal.catalog.feature.auth.presentation.login.state.LocalLoginEvent
 import com.pascal.catalog.feature.auth.presentation.login.state.LocalLoginUiState
-import com.pascal.catalog.feature.catalog.navigation.CatalogDestination
+import com.pascal.catalog.feature.auth.presentation.login.state.LoginEvent
 
 @Composable
 fun LoginRoute(
     onRegister: () -> Unit,
     onLoginSuccess: () -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -75,26 +74,34 @@ fun LoginRoute(
         ShowDialog(
             message = uiState.error.second,
             textButton = stringResource(R.string.label_close),
-            color = MaterialTheme.colorScheme.primary
+            color = MaterialTheme.colorScheme.primary,
         ) {
             viewModel.hideDialog()
         }
     }
 
-    LoginScreen(
-        uiState = uiState,
-        onEvent = viewModel::onEvent,
-        onRegister = onRegister
-    )
+    CompositionLocalProvider(
+        LocalLoginEvent provides LoginEvent(
+            onEmailChange = viewModel::onEmailChange,
+            onPasswordChange = viewModel::onPasswordChange,
+            onTogglePasswordVisibility = viewModel::onTogglePasswordVisibility,
+            onSubmit = viewModel::onSubmit,
+        ),
+    ) {
+        LoginScreen(
+            uiState = uiState,
+            onRegister = onRegister,
+        )
+    }
 }
 
 @Composable
 fun LoginScreen(
     modifier: Modifier = Modifier,
     uiState: LocalLoginUiState = LocalLoginUiState(),
-    onEvent: (LocalLoginEvent) -> Unit = {},
-    onRegister: () -> Unit = {}
+    onRegister: () -> Unit = {},
 ) {
+    val event = LocalLoginEvent.current
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -111,12 +118,12 @@ fun LoginScreen(
                     keyboardController?.hide()
                 }
             },
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             modifier = Modifier.size(100.dp),
             painter = painterResource(R.drawable.logo),
-            contentDescription = null
+            contentDescription = null,
         )
 
         Spacer(Modifier.height(16.dp))
@@ -124,8 +131,8 @@ fun LoginScreen(
         Text(
             text = stringResource(R.string.label_app_name),
             style = MaterialTheme.typography.headlineMedium.copy(
-                color = MaterialTheme.colorScheme.onSurface
-            )
+                color = MaterialTheme.colorScheme.onSurface,
+            ),
         )
 
         Spacer(Modifier.height(8.dp))
@@ -133,8 +140,8 @@ fun LoginScreen(
         Text(
             text = stringResource(R.string.label_title_login),
             style = MaterialTheme.typography.bodySmall.copy(
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            ),
         )
 
         Spacer(Modifier.height(48.dp))
@@ -143,14 +150,14 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.White, RoundedCornerShape(16.dp))
-                .padding(24.dp)
+                .padding(24.dp),
         ) {
             FormEmailComponent(
                 title = stringResource(R.string.label_email_username),
                 hintText = stringResource(R.string.hint_email_username),
-                value = uiState.email.second,
-                onValueChange = { onEvent(LocalLoginEvent.OnEmailChange(it)) },
-                isError = uiState.email.first
+                value = uiState.email.first,
+                onValueChange = event.onEmailChange,
+                isError = uiState.email.second,
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -158,47 +165,44 @@ fun LoginScreen(
             FormPasswordComponent(
                 title = stringResource(R.string.label_password),
                 hintText = stringResource(R.string.hint_password),
-                value = uiState.password.second,
-                onValueChange = { onEvent(LocalLoginEvent.OnPasswordChange(it)) },
-                isError = uiState.password.first,
-                isPasswordVisible = uiState.passwordVisibility,
-                onIconClick = {
-                    onEvent(LocalLoginEvent.OnPasswordVisibility)
-                }
+                value = uiState.password.first,
+                onValueChange = event.onPasswordChange,
+                isError = uiState.password.second,
+                isPasswordVisible = uiState.isPasswordVisible,
+                onIconClick = event.onTogglePasswordVisibility,
             ) {
                 keyboardController?.hide()
-                onEvent(LocalLoginEvent.OnSubmit)
+                event.onSubmit()
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
             ButtonComponent(text = stringResource(R.string.label_login)) {
                 keyboardController?.hide()
-                onEvent(LocalLoginEvent.OnSubmit)
+                event.onSubmit()
             }
         }
 
         Spacer(Modifier.height(24.dp))
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = stringResource(R.string.message_dont_have_account),
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                ),
             )
             Spacer(Modifier.width(8.dp))
             Text(
                 modifier = Modifier.clickable { onRegister() },
                 text = stringResource(R.string.label_register),
                 style = MaterialTheme.typography.titleMedium.copy(
-                    color = MaterialTheme.colorScheme.primary
-                )
+                    color = MaterialTheme.colorScheme.primary,
+                ),
             )
         }
     }

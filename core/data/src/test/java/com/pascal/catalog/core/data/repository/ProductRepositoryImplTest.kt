@@ -20,27 +20,6 @@ class ProductRepositoryImplTest {
     private val dispatcher = StandardTestDispatcher()
 
     @Test
-    fun `login emits token when credentials are correct`() = runTest(dispatcher) {
-        val api = FakeApi(products = emptyList())
-        val repository = ProductRepositoryImpl(
-            api,
-            FakeProductDao(emptyList()),
-            FakeCategoryDao(),
-            FakeUserDao(),
-            FakeOrderDao(),
-            dispatcher,
-        )
-
-        repository.login("user", "password").test {
-            val result = awaitItem()
-
-            assertThat(result.token).isEqualTo("fake_token")
-
-            awaitComplete()
-        }
-    }
-
-    @Test
     fun `refresh keeps favorite state when replacing cache`() = runTest(dispatcher) {
         val dao = FakeProductDao(
             initialProducts = listOf(

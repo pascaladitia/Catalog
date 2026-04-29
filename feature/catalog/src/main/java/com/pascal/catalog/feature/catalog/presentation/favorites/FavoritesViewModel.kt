@@ -6,7 +6,6 @@ import com.pascal.catalog.core.domain.usecase.AddToCartUseCase
 import com.pascal.catalog.core.domain.usecase.ObserveFavoriteProductsUseCase
 import com.pascal.catalog.core.domain.usecase.ToggleFavoriteUseCase
 import com.pascal.catalog.feature.catalog.presentation.favorites.mapper.FavoritesUiStateMapper
-import com.pascal.catalog.feature.catalog.presentation.favorites.state.LocalFavoritesEvent
 import com.pascal.catalog.feature.catalog.presentation.favorites.state.LocalFavoritesUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -30,10 +29,15 @@ class FavoritesViewModel @Inject constructor(
             initialValue = LocalFavoritesUiState(),
         )
 
-    fun onEvent(event: LocalFavoritesEvent) {
-        when (event) {
-            is LocalFavoritesEvent.ToggleFavorite -> viewModelScope.launch { toggleFavoriteUseCase(event.productId) }
-            is LocalFavoritesEvent.AddToCart -> viewModelScope.launch { addToCartUseCase(event.productId) }
+    fun onToggleFavorite(productId: Int) {
+        viewModelScope.launch {
+            toggleFavoriteUseCase(productId)
+        }
+    }
+
+    fun onAddToCart(productId: Int) {
+        viewModelScope.launch {
+            addToCartUseCase(productId)
         }
     }
 }

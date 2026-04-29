@@ -6,7 +6,6 @@ import com.pascal.catalog.core.domain.usecase.ClearCartUseCase
 import com.pascal.catalog.core.domain.usecase.ObserveCartProductsUseCase
 import com.pascal.catalog.core.domain.usecase.UpdateCartQuantityUseCase
 import com.pascal.catalog.feature.catalog.presentation.cart.mapper.CartUiStateMapper
-import com.pascal.catalog.feature.catalog.presentation.cart.state.LocalCartEvent
 import com.pascal.catalog.feature.catalog.presentation.cart.state.LocalCartUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -30,19 +29,23 @@ class CartViewModel @Inject constructor(
             initialValue = LocalCartUiState(),
         )
 
-    fun onEvent(event: LocalCartEvent) {
-        when (event) {
-            is LocalCartEvent.IncreaseQuantity -> viewModelScope.launch {
-                val product = uiState.value.products.firstOrNull { it.id == event.productId } ?: return@launch
-                updateCartQuantityUseCase(event.productId, product.cartQuantity + 1)
-            }
+    fun onIncreaseQuantity(productId: Int) {
+        viewModelScope.launch {
+            val product = uiState.value.products.firstOrNull { it.id == productId } ?: return@launch
+            updateCartQuantityUseCase(productId, product.cartQuantity + 1)
+        }
+    }
 
-            is LocalCartEvent.DecreaseQuantity -> viewModelScope.launch {
-                val product = uiState.value.products.firstOrNull { it.id == event.productId } ?: return@launch
-                updateCartQuantityUseCase(event.productId, product.cartQuantity - 1)
-            }
+    fun onDecreaseQuantity(productId: Int) {
+        viewModelScope.launch {
+            val product = uiState.value.products.firstOrNull { it.id == productId } ?: return@launch
+            updateCartQuantityUseCase(productId, product.cartQuantity - 1)
+        }
+    }
 
-            LocalCartEvent.ClearCart -> viewModelScope.launch { clearCartUseCase() }
+    fun onClearCart() {
+        viewModelScope.launch {
+            clearCartUseCase()
         }
     }
 }

@@ -1,7 +1,13 @@
 package com.pascal.catalog.feature.catalog.presentation.detail.state
 
-sealed interface LocalDetailEvent {
-    data object Refresh : LocalDetailEvent
-    data object ToggleFavorite : LocalDetailEvent
-    data object AddToCart : LocalDetailEvent
-}
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.compositionLocalOf
+
+val LocalDetailEvent = compositionLocalOf { DetailEvent() }
+
+@Stable
+data class DetailEvent(
+    val onRefresh: () -> Unit = {},
+    val onToggleFavorite: () -> Unit = {},
+    val onAddToCart: () -> Unit = {},
+)

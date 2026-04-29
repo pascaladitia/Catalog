@@ -24,6 +24,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -40,6 +41,7 @@ import com.pascal.catalog.core.designsystem.component.ProductHighlightCard
 import com.pascal.catalog.core.designsystem.component.ProductRowCard
 import com.pascal.catalog.core.designsystem.component.SectionHeader
 import com.pascal.catalog.feature.catalog.R
+import com.pascal.catalog.feature.catalog.presentation.home.state.HomeEvent
 import com.pascal.catalog.feature.catalog.presentation.home.state.LocalHomeEvent
 import com.pascal.catalog.feature.catalog.presentation.home.state.LocalHomeUiState
 
@@ -49,20 +51,29 @@ fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    HomeScreen(
-        uiState = uiState,
-        onEvent = viewModel::onEvent,
-        onOpenDetail = onOpenDetail,
-    )
+    CompositionLocalProvider(
+        LocalHomeEvent provides HomeEvent(
+            onSearchChanged = viewModel::onSearchChanged,
+            onCategorySelected = viewModel::onCategorySelected,
+            onRefresh = viewModel::onRefresh,
+            onToggleFavorite = viewModel::onToggleFavorite,
+            onAddToCart = viewModel::onAddToCart,
+        ),
+    ) {
+        HomeScreen(
+            uiState = uiState,
+            onOpenDetail = onOpenDetail,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun HomeScreen(
     uiState: LocalHomeUiState,
-    onEvent: (LocalHomeEvent) -> Unit,
     onOpenDetail: (Int) -> Unit,
 ) {
+    val event = LocalHomeEvent.current
     val snackbarHostState = remember { SnackbarHostState() }
     val offlineFallbackMessage = stringResource(R.string.offline_fallback_message)
 
@@ -103,7 +114,7 @@ private fun HomeScreen(
                 item {
                     OutlinedTextField(
                         value = uiState.query,
-                        onValueChange = { onEvent(LocalHomeEvent.SearchChanged(it)) },
+                        onValueChange = event.onSearchChanged,
                         modifier = Modifier.fillMaxWidth(),
                         placeholder = { Text(stringResource(R.string.search_placeholder)) },
                         leadingIcon = {
@@ -128,7 +139,7 @@ private fun HomeScreen(
                         item {
                             FilterChip(
                                 selected = uiState.selectedCategory == null,
-                                onClick = { onEvent(LocalHomeEvent.CategorySelected(null)) },
+                                onClick = { event.onCategorySelected(null) },
                                 colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Color.White),
                                 label = { Text(stringResource(R.string.category_all)) },
                             )
@@ -136,7 +147,7 @@ private fun HomeScreen(
                         items(uiState.categories) { category ->
                             FilterChip(
                                 selected = uiState.selectedCategory == category.name,
-                                onClick = { onEvent(LocalHomeEvent.CategorySelected(category.name)) },
+                                onClick = { event.onCategorySelected(category.name) },
                                 colors = FilterChipDefaults.filterChipColors(selectedContainerColor = Color.White),
                                 label = { Text(stringResource(R.string.category_with_count, category.name, category.itemCount)) },
                             )
@@ -163,8 +174,8 @@ private fun HomeScreen(
                                 ProductHighlightCard(
                                     product = product,
                                     onClick = { onOpenDetail(product.id) },
-                                    onFavoriteClick = { onEvent(LocalHomeEvent.ToggleFavorite(product.id)) },
-                                    onAddToCartClick = { onEvent(LocalHomeEvent.AddToCart(product.id)) },
+                                    onFavoriteClick = { event.onToggleFavorite(product.id) },
+                                    onAddToCartClick = { event.onAddToCart(product.id) },
                                     modifier = Modifier.fillParentMaxWidth(0.72f),
                                 )
                             }
@@ -180,8 +191,8 @@ private fun HomeScreen(
                         ProductRowCard(
                             product = product,
                             onClick = { onOpenDetail(product.id) },
-                            onFavoriteClick = { onEvent(LocalHomeEvent.ToggleFavorite(product.id)) },
-                            onAddToCartClick = { onEvent(LocalHomeEvent.AddToCart(product.id)) },
+                            onFavoriteClick = { event.onToggleFavorite(product.id) },
+                            onAddToCartClick = { event.onAddToCart(product.id) },
                         )
                     }
                 }

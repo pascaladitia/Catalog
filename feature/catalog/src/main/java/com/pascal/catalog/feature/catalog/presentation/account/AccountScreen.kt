@@ -34,6 +34,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,6 +54,7 @@ import com.pascal.catalog.core.designsystem.theme.OceanDark
 import com.pascal.catalog.core.domain.model.CatalogUser
 import com.pascal.catalog.core.domain.model.Order
 import com.pascal.catalog.feature.catalog.R
+import com.pascal.catalog.feature.catalog.presentation.account.state.AccountEvent
 import com.pascal.catalog.feature.catalog.presentation.account.state.LocalAccountEvent
 import com.pascal.catalog.feature.catalog.presentation.account.state.LocalAccountUiState
 import java.util.Locale
@@ -62,20 +65,30 @@ fun AccountRoute(
     onLogout: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    AccountScreen(
-        uiState = uiState,
-        onEvent = viewModel::onEvent,
-        onLogout = onLogout
-    )
+    CompositionLocalProvider(
+        LocalAccountEvent provides AccountEvent(
+            onRefresh = viewModel::onRefresh,
+        ),
+    ) {
+        AccountScreen(
+            uiState = uiState,
+            onLogout = onLogout,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun AccountScreen(
     uiState: LocalAccountUiState,
-    onEvent: (LocalAccountEvent) -> Unit,
     onLogout: () -> Unit
 ) {
+    val event = LocalAccountEvent.current
+
+    LaunchedEffect(Unit) {
+        event.onRefresh()
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(stringResource(R.string.account_title)) })

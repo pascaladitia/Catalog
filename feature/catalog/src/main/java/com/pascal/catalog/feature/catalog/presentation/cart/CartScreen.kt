@@ -14,6 +14,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -23,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pascal.catalog.core.designsystem.component.CartItemCard
 import com.pascal.catalog.core.designsystem.component.EmptyState
 import com.pascal.catalog.feature.catalog.R
+import com.pascal.catalog.feature.catalog.presentation.cart.state.CartEvent
 import com.pascal.catalog.feature.catalog.presentation.cart.state.LocalCartEvent
 import com.pascal.catalog.feature.catalog.presentation.cart.state.LocalCartUiState
 import java.util.Locale
@@ -32,15 +34,23 @@ fun CartRoute(
     viewModel: CartViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    CartScreen(uiState, viewModel::onEvent)
+    CompositionLocalProvider(
+        LocalCartEvent provides CartEvent(
+            onIncreaseQuantity = viewModel::onIncreaseQuantity,
+            onDecreaseQuantity = viewModel::onDecreaseQuantity,
+            onClearCart = viewModel::onClearCart,
+        ),
+    ) {
+        CartScreen(uiState)
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun CartScreen(
     uiState: LocalCartUiState,
-    onEvent: (LocalCartEvent) -> Unit,
 ) {
+    val event = LocalCartEvent.current
     Scaffold(
         topBar = {
             TopAppBar(title = { Text(stringResource(R.string.cart_title)) })
@@ -64,8 +74,8 @@ private fun CartScreen(
                 items(uiState.products, key = { it.id }) { product ->
                     CartItemCard(
                         product = product,
-                        onIncrease = { onEvent(LocalCartEvent.IncreaseQuantity(product.id)) },
-                        onDecrease = { onEvent(LocalCartEvent.DecreaseQuantity(product.id)) },
+                        onIncrease = { event.onIncreaseQuantity(product.id) },
+                        onDecrease = { event.onDecreaseQuantity(product.id) },
                     )
                 }
                 item {
@@ -83,7 +93,7 @@ private fun CartScreen(
                                 ),
                             )
                             Button(
-                                onClick = { onEvent(LocalCartEvent.ClearCart) },
+                                onClick = event.onClearCart,
                                 modifier = Modifier.fillMaxWidth(),
                             ) {
                                 Text(stringResource(R.string.cart_clear_action))

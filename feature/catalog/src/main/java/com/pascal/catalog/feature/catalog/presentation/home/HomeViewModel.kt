@@ -12,7 +12,6 @@ import com.pascal.catalog.core.domain.usecase.RefreshProductsUseCase
 import com.pascal.catalog.core.domain.usecase.SearchProductsUseCase
 import com.pascal.catalog.core.domain.usecase.ToggleFavoriteUseCase
 import com.pascal.catalog.feature.catalog.presentation.home.mapper.HomeUiStateMapper
-import com.pascal.catalog.feature.catalog.presentation.home.state.LocalHomeEvent
 import com.pascal.catalog.feature.catalog.presentation.home.state.LocalHomeUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -63,32 +62,24 @@ class HomeViewModel @Inject constructor(
     )
 
     init {
-        onEvent(LocalHomeEvent.Refresh)
+        onRefresh()
     }
 
-    fun onEvent(event: LocalHomeEvent) {
-        when (event) {
-            is LocalHomeEvent.SearchChanged -> {
-                query.value = event.value
-                metaState.update { it.copy(query = event.value) }
-            }
+    fun onSearchChanged(value: String) {
+        query.value = value
+        metaState.update { it.copy(query = value) }
+    }
 
-            is LocalHomeEvent.CategorySelected -> {
-                metaState.update { it.copy(selectedCategory = event.category) }
-                if (event.category != null) {
-                    viewModelScope.launch {
-                        refreshCategoryUseCase(event.category)
-                    }
-                }
-            }
+    fun onCategorySelected(category: String?) {
+        metaState.update { it.copy(selectedCategory = category) }
+        if (category == null) return
 
-            LocalHomeEvent.Refresh -> refreshAll()
-            is LocalHomeEvent.ToggleFavorite -> viewModelScope.launch { toggleFavoriteUseCase(event.productId) }
-            is LocalHomeEvent.AddToCart -> viewModelScope.launch { addToCartUseCase(event.productId) }
+        viewModelScope.launch {
+            refreshCategoryUseCase(category)
         }
     }
 
-    private fun refreshAll() {
+    fun onRefresh() {
         viewModelScope.launch {
             metaState.update { it.copy(isRefreshing = true, showOfflineFallback = false) }
             val result = refreshProductsUseCase()
@@ -101,4 +92,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun onToggleFavorite(productId: Int) {
+        viewModelScope.launch {
+            toggleFavoriteUseCase(productId)
+        }
+    }
+
+    fun onAddToCart(productId: Int) {
+        viewModelScope.launch {
+            addToCartUseCase(productId)
+        }
+    }
 }

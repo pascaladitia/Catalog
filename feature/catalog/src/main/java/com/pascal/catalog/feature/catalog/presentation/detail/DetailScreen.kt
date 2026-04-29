@@ -25,6 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,6 +37,7 @@ import com.pascal.catalog.core.designsystem.component.CatalogNetworkImage
 import com.pascal.catalog.core.designsystem.component.EmptyState
 import com.pascal.catalog.core.designsystem.component.ProductHighlightCard
 import com.pascal.catalog.feature.catalog.R
+import com.pascal.catalog.feature.catalog.presentation.detail.state.DetailEvent
 import com.pascal.catalog.feature.catalog.presentation.detail.state.LocalDetailEvent
 import com.pascal.catalog.feature.catalog.presentation.detail.state.LocalDetailUiState
 import java.util.Locale
@@ -47,17 +49,25 @@ fun DetailRoute(
     viewModel: DetailViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    DetailScreen(uiState, viewModel::onEvent, onBack, onOpenDetail)
+    CompositionLocalProvider(
+        LocalDetailEvent provides DetailEvent(
+            onRefresh = viewModel::onRefresh,
+            onToggleFavorite = viewModel::onToggleFavorite,
+            onAddToCart = viewModel::onAddToCart,
+        ),
+    ) {
+        DetailScreen(uiState, onBack, onOpenDetail)
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun DetailScreen(
     uiState: LocalDetailUiState,
-    onEvent: (LocalDetailEvent) -> Unit,
     onBack: () -> Unit,
     onOpenDetail: (Int) -> Unit,
 ) {
+    val event = LocalDetailEvent.current
     Scaffold(
         topBar = {
             TopAppBar(
@@ -121,13 +131,13 @@ private fun DetailScreen(
                                 Text(stringResource(R.string.detail_rating, product.rating.rate, product.rating.count))
                             }
                             Button(
-                                onClick = { onEvent(LocalDetailEvent.AddToCart) },
+                                onClick = event.onAddToCart,
                                 modifier = Modifier.fillMaxWidth(),
                             ) {
                                 Text(stringResource(R.string.action_add_favorite_cart))
                             }
                             Button(
-                                onClick = { onEvent(LocalDetailEvent.ToggleFavorite) },
+                                onClick = event.onToggleFavorite,
                                 modifier = Modifier.fillMaxWidth(),
                             ) {
                                 Icon(Icons.Rounded.Favorite, contentDescription = null)
@@ -151,8 +161,8 @@ private fun DetailScreen(
                                 ProductHighlightCard(
                                     product = related,
                                     onClick = { onOpenDetail(related.id) },
-                                    onFavoriteClick = { onEvent(LocalDetailEvent.ToggleFavorite) },
-                                    onAddToCartClick = { onEvent(LocalDetailEvent.AddToCart) },
+                                    onFavoriteClick = event.onToggleFavorite,
+                                    onAddToCartClick = event.onAddToCart,
                                     modifier = Modifier.fillParentMaxWidth(0.74f),
                                 )
                             }
